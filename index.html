@@ -1,0 +1,2965 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OrderTech - Members</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f5f5f7;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Container */
+        .sidebar {
+            width: 260px;
+            background-color: #fafafa;
+            border-right: 1px solid #e5e5e5;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            transition: transform 0.3s ease;
+            z-index: 100;
+        }
+
+        .sidebar.collapsed {
+            transform: translateX(-260px);
+        }
+
+        /* Header */
+        .sidebar-header {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .menu-toggle {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #333;
+            cursor: pointer;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-toggle:hover {
+            color: #6366f1;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+
+        .brand-info h1 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 2px;
+        }
+
+        .brand-info p {
+            font-size: 12px;
+            color: #6b7280;
+        }
+
+        /* Navigation */
+        .sidebar-nav {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            color: #4b5563;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 2px 12px;
+            border-radius: 8px;
+        }
+
+        .nav-item:hover {
+            background-color: #f3f4f6;
+            color: #1a1a1a;
+        }
+
+        .nav-item.active {
+            background-color: #e0e7ff;
+            color: #4338ca;
+            font-weight: 500;
+        }
+
+        .nav-item i {
+            width: 20px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        /* Footer */
+        .sidebar-footer {
+            padding: 20px;
+            border-top: 1px solid #e5e5e5;
+        }
+
+        .sign-out {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            color: #6b7280;
+            text-decoration: none;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .sign-out:hover {
+            background-color: #fee2e2;
+            color: #dc2626;
+        }
+
+        .sign-out i {
+            width: 20px;
+            font-size: 18px;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            margin-left: 260px;
+            flex: 1;
+            padding: 40px;
+            transition: margin-left 0.3s ease;
+        }
+
+        .main-content.expanded {
+            margin-left: 0;
+        }
+
+        /* Page Content */
+        .page-content {
+            display: none;
+        }
+
+        .page-content.active {
+            display: block;
+        }
+
+        /* Page Header */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 32px;
+        }
+
+        .page-header-content h1 {
+            font-size: 36px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+
+        .page-header-content p {
+            font-size: 16px;
+            color: #6b7280;
+        }
+
+        .version-badge {
+            background: white;
+            border: 1px solid #e5e7eb;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-back {
+            background: #f3f4f6;
+            color: #4b5563;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .btn-back:hover {
+            background: #e5e7eb;
+            color: #1a1a1a;
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #4b5563;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+
+        .btn-danger {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-danger:hover {
+            background: #b91c1c;
+        }
+
+        /* Controls Bar */
+        .controls-bar {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            margin-bottom: 24px;
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 14px;
+            color: #9ca3af;
+            font-size: 16px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 14px 12px 42px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            background: #fafafa;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: #6366f1;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .controls-group {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .filter-select, .sort-select {
+            padding: 12px 14px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 14px;
+            background: #fafafa;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-select:focus, .sort-select:focus {
+            outline: none;
+            border-color: #6366f1;
+            background: white;
+        }
+
+        .view-toggle {
+            display: flex;
+            gap: 4px;
+            background: #f3f4f6;
+            padding: 4px;
+            border-radius: 10px;
+        }
+
+        .view-btn {
+            background: transparent;
+            border: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: #6b7280;
+            transition: all 0.2s ease;
+        }
+
+        .view-btn:hover {
+            color: #1a1a1a;
+        }
+
+        .view-btn.active {
+            background: white;
+            color: #6366f1;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        /* Restaurants Grid */
+        .restaurants-container {
+            max-width: 1400px;
+        }
+
+        .restaurants-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .restaurants-grid.list-view {
+            grid-template-columns: 1fr;
+            max-width: 900px;
+        }
+
+        .restaurant-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .restaurant-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #6366f1 0%, #8b5cf6 100%);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .restaurant-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .restaurant-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            border-color: #6366f1;
+        }
+
+        .restaurant-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .restaurant-card-title {
+            flex: 1;
+        }
+
+        .restaurant-card-title h3 {
+            font-size: 20px;
+            color: #1a1a1a;
+            font-weight: 700;
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .restaurant-address {
+            font-size: 14px;
+            color: #6b7280;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .restaurant-address i {
+            font-size: 13px;
+            color: #9ca3af;
+        }
+
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-badge.opened {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-badge.closed {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .status-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        .restaurant-stats {
+            display: flex;
+            gap: 24px;
+            padding-top: 16px;
+            border-top: 1px solid #f3f4f6;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .stat-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6366f1;
+            font-size: 16px;
+        }
+
+        .stat-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a1a1a;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #6b7280;
+            margin-top: 2px;
+        }
+
+        .restaurant-card:hover .stat-icon {
+            background: #e0e7ff;
+        }
+
+        /* System Roles Grid */
+        .system-roles-container {
+            max-width: 1400px;
+        }
+
+        .system-roles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .system-roles-grid.list-view {
+            grid-template-columns: 1fr;
+            max-width: 900px;
+        }
+
+        .role-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .role-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .role-card.owner::before {
+            background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%);
+        }
+
+        .role-card.admin::before {
+            background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+        }
+
+        .role-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .role-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+
+        .role-card.owner:hover {
+            border-color: #f59e0b;
+        }
+
+        .role-card.admin:hover {
+            border-color: #3b82f6;
+        }
+
+        .role-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 16px;
+        }
+
+        .role-user-info {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .role-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .role-details h4 {
+            font-size: 16px;
+            color: #1a1a1a;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .role-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .role-badge.admin {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .role-badge.owner {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .role-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .icon-btn {
+            background: #f3f4f6;
+            border: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            color: #6b7280;
+        }
+
+        .icon-btn:hover {
+            background: #e5e7eb;
+        }
+
+        .icon-btn.delete:hover {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .icon-btn.edit:hover {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+
+        .role-card-body p {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .role-card-body p i {
+            width: 20px;
+            margin-right: 10px;
+            color: #9ca3af;
+        }
+
+        /* Tabs */
+        .tabs-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            overflow: hidden;
+            border: 1px solid #f0f0f0;
+        }
+
+        .tabs-header {
+            display: flex;
+            border-bottom: 2px solid #f3f4f6;
+            background: #fafafa;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 18px 24px;
+            border: none;
+            background: transparent;
+            color: #6b7280;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.2s ease;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+        }
+
+        .tab-btn:hover {
+            background: #f3f4f6;
+            color: #1a1a1a;
+        }
+
+        .tab-btn.active {
+            color: #6366f1;
+            border-bottom-color: #6366f1;
+            background: white;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 0;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-content .controls-bar {
+            margin: 20px 20px 0 20px;
+        }
+
+        .tab-content .members-container {
+            padding: 20px;
+        }
+
+        /* Members Container */
+        .members-container {
+            max-width: 1400px;
+        }
+
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .members-grid.list-view {
+            grid-template-columns: 1fr;
+            max-width: 900px;
+        }
+
+        .member-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #e5e7eb;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .member-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .member-card.owner::before {
+            background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%);
+        }
+
+        .member-card.recipient::before {
+            background: linear-gradient(90deg, #10b981 0%, #059669 100%);
+        }
+
+        .member-card.viewer::before {
+            background: linear-gradient(90deg, #8b5cf6 0%, #7c3aed 100%);
+        }
+
+        .member-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .member-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+
+        .member-card.owner:hover {
+            border-color: #f59e0b;
+        }
+
+        .member-card.recipient:hover {
+            border-color: #10b981;
+        }
+
+        .member-card.viewer:hover {
+            border-color: #8b5cf6;
+        }
+
+        .member-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            gap: 12px;
+        }
+
+        .member-info {
+            flex: 1;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .member-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .member-details h4 {
+            font-size: 16px;
+            color: #1a1a1a;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .member-role-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .member-role-badge.owner {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .member-role-badge.recipient {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .member-role-badge.viewer {
+            background: #ede9fe;
+            color: #5b21b6;
+        }
+
+        .member-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .member-card-body p {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .member-card-body p i {
+            width: 20px;
+            margin-right: 10px;
+            color: #9ca3af;
+        }
+
+        .member-card-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(2px);
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 36px;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .modal-header i {
+            color: #dc2626;
+            font-size: 54px;
+            margin-bottom: 16px;
+        }
+
+        .modal-header h3 {
+            font-size: 24px;
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+
+        .modal-body {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .modal-body p {
+            font-size: 15px;
+            color: #4b5563;
+            line-height: 1.5;
+        }
+
+        .modal-body p strong {
+            color: #1a1a1a;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: #374151;
+            margin-bottom: 8px;
+        }
+
+        .form-group label .required {
+            color: #dc2626;
+            margin-left: 2px;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            background: #fafafa;
+            font-family: inherit;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: #6366f1;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: #9ca3af;
+        }
+
+        .form-select {
+            cursor: pointer;
+        }
+
+        .modal-content.large {
+            max-width: 550px;
+        }
+
+        .modal-footer.full {
+            justify-content: space-between;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Mobile Toggle Button */
+        .mobile-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #6366f1;
+            color: white;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 2px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-260px);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 24px 16px;
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .page-header {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .page-header-content h1 {
+                font-size: 28px;
+            }
+
+            .controls-bar {
+                flex-direction: column;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .controls-group {
+                width: 100%;
+                flex-wrap: wrap;
+            }
+
+            .restaurants-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .system-roles-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tabs-header {
+                flex-direction: column;
+            }
+
+            .tab-btn {
+                border-bottom: none;
+                border-left: 3px solid transparent;
+            }
+
+            .tab-btn.active {
+                border-left-color: #6366f1;
+            }
+        }
+
+        /* Scrollbar Styling */
+        .sidebar-nav::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .sidebar-nav::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .sidebar-nav::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 3px;
+        }
+
+        .sidebar-nav::-webkit-scrollbar-thumb:hover {
+            background: #9ca3af;
+        }
+
+        /* Pagination Styles */
+        .pagination-container {
+            margin-top: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .pagination-info {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .pagination-info strong {
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+
+        .pagination-controls {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .pagination-btn {
+            background: white;
+            border: 1px solid #e5e7eb;
+            min-width: 38px;
+            height: 38px;
+            padding: 0 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            color: #6b7280;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            background: #f3f4f6;
+            border-color: #6366f1;
+            color: #6366f1;
+        }
+
+        .pagination-btn.active {
+            background: #6366f1;
+            border-color: #6366f1;
+            color: white;
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .pagination-ellipsis {
+            color: #9ca3af;
+            padding: 0 8px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .pagination-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .pagination-controls {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Mobile Toggle Button -->
+    <button class="mobile-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <!-- Header -->
+        <div class="sidebar-header">
+            <button class="menu-toggle" onclick="toggleSidebar()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="logo">
+                <i class="fas fa-layer-group"></i>
+            </div>
+            <div class="brand-info">
+                <h1>OrderTech</h1>
+                <p>AI Restaurant Ops</p>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="sidebar-nav">
+            <a href="#" class="nav-item" data-page="dashboard">
+                <i class="fas fa-th-large"></i>
+                <span>Dashboard</span>
+            </a>
+            
+            <a href="#" class="nav-item" data-page="restaurants">
+                <i class="fas fa-building"></i>
+                <span>Restaurants</span>
+            </a>
+            
+            <a href="#" class="nav-item" data-page="orders">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Orders</span>
+            </a>
+            
+            <a href="#" class="nav-item" data-page="integrations">
+                <i class="fas fa-puzzle-piece"></i>
+                <span>Integrations</span>
+            </a>
+            
+            <a href="#" class="nav-item" data-page="calls">
+                <i class="fas fa-phone"></i>
+                <span>Calls</span>
+            </a>
+            
+            <a href="#" class="nav-item active" data-page="members">
+                <i class="fas fa-users"></i>
+                <span>Members</span>
+            </a>
+            
+            <a href="#" class="nav-item" data-page="menu">
+                <i class="fas fa-utensils"></i>
+                <span>Menu</span>
+            </a>
+            
+            <a href="#" class="nav-item" data-page="customers">
+                <i class="fas fa-user-friends"></i>
+                <span>Customers</span>
+            </a>
+            
+            <a href="#" class="nav-item" data-page="branches">
+                <i class="fas fa-store"></i>
+                <span>Branches</span>
+            </a>
+            
+            <a href="#" class="nav-item" data-page="ai-agent">
+                <i class="fas fa-robot"></i>
+                <span>AI Agent</span>
+            </a>
+            
+            <a href="#" class="nav-item" data-page="billing">
+                <i class="fas fa-credit-card"></i>
+                <span>Billing</span>
+            </a>
+            
+            <a href="#" class="nav-item" data-page="plans">
+                <i class="fas fa-star"></i>
+                <span>Plans</span>
+            </a>
+            
+            <a href="#" class="nav-item" data-page="settings">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+        </nav>
+
+        <!-- Footer -->
+        <div class="sidebar-footer">
+            <a href="#" class="sign-out" onclick="handleSignOut(event)">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Sign Out</span>
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        <!-- Restaurants Listing Page -->
+        <div id="restaurantsPage" class="page-content active">
+            <div class="page-header">
+                <div class="page-header-content">
+                    <h1>Restaurants</h1>
+                    <p>Select a restaurant to view members</p>
+                </div>
+                <div style="display: flex; gap: 12px; align-items: center;">
+                    <span class="version-badge">v1.3</span>
+                    <button class="btn-primary" onclick="openSystemRolesPage()">
+                        <i class="fas fa-user-shield"></i>
+                        Check System Roles
+                    </button>
+                </div>
+            </div>
+
+            <!-- Search, Filter, Sort Controls -->
+            <div class="controls-bar">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search restaurants..." onkeyup="filterRestaurants()">
+                </div>
+                
+                <div class="controls-group">
+                    <select id="filterSelect" onchange="filterRestaurants()" class="filter-select">
+                        <option value="all">All Status</option>
+                        <option value="opened">Opened</option>
+                        <option value="closed">Closed</option>
+                    </select>
+                    
+                    <select id="sortSelect" onchange="sortRestaurants()" class="sort-select">
+                        <option value="name">Sort by Name</option>
+                        <option value="date">Sort by Date</option>
+                        <option value="members">Sort by Members</option>
+                    </select>
+                    
+                    <div class="view-toggle">
+                        <button class="view-btn active" onclick="changeView('grid')" data-view="grid">
+                            <i class="fas fa-th"></i>
+                        </button>
+                        <button class="view-btn" onclick="changeView('list')" data-view="list">
+                            <i class="fas fa-list"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Restaurants Grid -->
+            <div class="restaurants-container">
+                <div id="restaurantsGrid" class="restaurants-grid">
+                    <!-- Restaurants will be rendered here -->
+                </div>
+                
+                <!-- Pagination -->
+                <div class="pagination-container" id="paginationContainer">
+                    <div class="pagination-info" id="paginationInfo">
+                        Showing <strong id="itemsStart">1</strong> - <strong id="itemsEnd">10</strong> of <strong id="itemsTotal">0</strong> restaurants
+                    </div>
+                    <div class="pagination-controls" id="paginationControls">
+                        <!-- Pagination buttons will be rendered here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- System Roles Page -->
+        <div id="systemRolesPage" class="page-content">
+            <div class="page-header">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <button class="btn-back" onclick="closeSystemRolesPage()">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div class="page-header-content">
+                        <h1>System Roles</h1>
+                        <p>Manage system administrators and owners</p>
+                    </div>
+                </div>
+                <button class="btn-primary" onclick="openAddSystemMemberModal()">
+                    <i class="fas fa-user-plus"></i>
+                    Add Members
+                </button>
+            </div>
+
+            <!-- Search, Filter, Sort Controls -->
+            <div class="controls-bar">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="rolesSearchInput" placeholder="Search users..." onkeyup="filterSystemRoles()">
+                </div>
+                
+                <div class="controls-group">
+                    <select id="rolesFilterSelect" onchange="filterSystemRoles()" class="filter-select">
+                        <option value="all">All Roles</option>
+                        <option value="System Owner">System Owner</option>
+                        <option value="System Admin">System Admin</option>
+                    </select>
+                    
+                    <select id="rolesSortSelect" onchange="sortSystemRoles()" class="sort-select">
+                        <option value="name">Sort by Name</option>
+                        <option value="role">Sort by Role</option>
+                        <option value="date">Sort by Date</option>
+                    </select>
+                    
+                    <div class="view-toggle">
+                        <button class="view-btn active" onclick="changeRolesView('grid')" data-view="grid">
+                            <i class="fas fa-th"></i>
+                        </button>
+                        <button class="view-btn" onclick="changeRolesView('list')" data-view="list">
+                            <i class="fas fa-list"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="system-roles-container">
+                <div class="system-roles-grid" id="systemRolesGrid">
+                    <!-- System roles cards will be rendered here -->
+                </div>
+                
+                <!-- Pagination -->
+                <div class="pagination-container" id="rolesPaginationContainer">
+                    <div class="pagination-info" id="rolesPaginationInfo">
+                        Showing <strong id="rolesItemsStart">1</strong> - <strong id="rolesItemsEnd">10</strong> of <strong id="rolesItemsTotal">0</strong> users
+                    </div>
+                    <div class="pagination-controls" id="rolesPaginationControls">
+                        <!-- Pagination buttons will be rendered here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Restaurant Members Page -->
+        <div id="restaurantMembersPage" class="page-content">
+            <div class="page-header">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <button class="btn-back" onclick="closeRestaurantMembersPage()">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div class="page-header-content">
+                        <h1 id="restaurantMembersTitle">Restaurant Members</h1>
+                        <p id="restaurantMembersSubtitle">Manage restaurant staff and permissions</p>
+                    </div>
+                </div>
+                <button class="btn-primary" onclick="openAddRestaurantMemberModal()">
+                    <i class="fas fa-user-plus"></i>
+                    Add Members
+                </button>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs-container">
+                <div class="tabs-header">
+                    <button class="tab-btn active" onclick="switchMembersTab('owners')" data-tab="owners">
+                        <i class="fas fa-user-tie"></i>
+                        Owners
+                    </button>
+                    <button class="tab-btn" onclick="switchMembersTab('recipients')" data-tab="recipients">
+                        <i class="fas fa-user-check"></i>
+                        Recipients
+                    </button>
+                    <button class="tab-btn" onclick="switchMembersTab('viewers')" data-tab="viewers">
+                        <i class="fas fa-eye"></i>
+                        Viewers
+                    </button>
+                </div>
+
+                <div class="tabs-content">
+                    <!-- Tab 1: Owners -->
+                    <div id="ownersTab" class="tab-content active">
+                        <!-- Search, Filter, Sort Controls -->
+                        <div class="controls-bar">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="ownersSearchInput" placeholder="Search owners..." onkeyup="filterTabMembers('owners')">
+                            </div>
+                            
+                            <div class="controls-group">
+                                <select id="ownersSortSelect" onchange="sortTabMembers('owners')" class="sort-select">
+                                    <option value="name">Sort by Name</option>
+                                    <option value="date">Sort by Date</option>
+                                </select>
+                                
+                                <div class="view-toggle">
+                                    <button class="view-btn active" onclick="changeTabView('owners', 'grid')" data-view="grid">
+                                        <i class="fas fa-th"></i>
+                                    </button>
+                                    <button class="view-btn" onclick="changeTabView('owners', 'list')" data-view="list">
+                                        <i class="fas fa-list"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="members-container">
+                            <div class="members-grid" id="ownersGrid">
+                                <!-- Owners cards will be rendered here -->
+                            </div>
+                            
+                            <!-- Pagination -->
+                            <div class="pagination-container" id="ownersPaginationContainer">
+                                <div class="pagination-info" id="ownersPaginationInfo">
+                                    Showing <strong id="ownersItemsStart">1</strong> - <strong id="ownersItemsEnd">10</strong> of <strong id="ownersItemsTotal">0</strong> owners
+                                </div>
+                                <div class="pagination-controls" id="ownersPaginationControls">
+                                    <!-- Pagination buttons will be rendered here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 2: Recipients -->
+                    <div id="recipientsTab" class="tab-content">
+                        <!-- Search, Filter, Sort Controls -->
+                        <div class="controls-bar">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="recipientsSearchInput" placeholder="Search recipients..." onkeyup="filterTabMembers('recipients')">
+                            </div>
+                            
+                            <div class="controls-group">
+                                <select id="recipientsBranchFilter" onchange="filterTabMembers('recipients')" class="filter-select">
+                                    <option value="all">All Branches</option>
+                                    <option value="Downtown Branch">Downtown Branch</option>
+                                    <option value="Uptown Branch">Uptown Branch</option>
+                                    <option value="Mall Branch">Mall Branch</option>
+                                </select>
+                                
+                                <select id="recipientsSortSelect" onchange="sortTabMembers('recipients')" class="sort-select">
+                                    <option value="name">Sort by Name</option>
+                                    <option value="date">Sort by Date</option>
+                                </select>
+                                
+                                <div class="view-toggle">
+                                    <button class="view-btn active" onclick="changeTabView('recipients', 'grid')" data-view="grid">
+                                        <i class="fas fa-th"></i>
+                                    </button>
+                                    <button class="view-btn" onclick="changeTabView('recipients', 'list')" data-view="list">
+                                        <i class="fas fa-list"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="members-container">
+                            <div class="members-grid" id="recipientsGrid">
+                                <!-- Recipients cards will be rendered here -->
+                            </div>
+                            
+                            <!-- Pagination -->
+                            <div class="pagination-container" id="recipientsPaginationContainer">
+                                <div class="pagination-info" id="recipientsPaginationInfo">
+                                    Showing <strong id="recipientsItemsStart">1</strong> - <strong id="recipientsItemsEnd">10</strong> of <strong id="recipientsItemsTotal">0</strong> recipients
+                                </div>
+                                <div class="pagination-controls" id="recipientsPaginationControls">
+                                    <!-- Pagination buttons will be rendered here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab 3: Viewers -->
+                    <div id="viewersTab" class="tab-content">
+                        <!-- Search, Filter, Sort Controls -->
+                        <div class="controls-bar">
+                            <div class="search-box">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="viewersSearchInput" placeholder="Search viewers..." onkeyup="filterTabMembers('viewers')">
+                            </div>
+                            
+                            <div class="controls-group">
+                                <select id="viewersBranchFilter" onchange="filterTabMembers('viewers')" class="filter-select">
+                                    <option value="all">All Branches</option>
+                                    <option value="Downtown Branch">Downtown Branch</option>
+                                    <option value="Uptown Branch">Uptown Branch</option>
+                                    <option value="Mall Branch">Mall Branch</option>
+                                </select>
+                                
+                                <select id="viewersSortSelect" onchange="sortTabMembers('viewers')" class="sort-select">
+                                    <option value="name">Sort by Name</option>
+                                    <option value="date">Sort by Date</option>
+                                </select>
+                                
+                                <div class="view-toggle">
+                                    <button class="view-btn active" onclick="changeTabView('viewers', 'grid')" data-view="grid">
+                                        <i class="fas fa-th"></i>
+                                    </button>
+                                    <button class="view-btn" onclick="changeTabView('viewers', 'list')" data-view="list">
+                                        <i class="fas fa-list"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="members-container">
+                            <div class="members-grid" id="viewersGrid">
+                                <!-- Viewers cards will be rendered here -->
+                            </div>
+                            
+                            <!-- Pagination -->
+                            <div class="pagination-container" id="viewersPaginationContainer">
+                                <div class="pagination-info" id="viewersPaginationInfo">
+                                    Showing <strong id="viewersItemsStart">1</strong> - <strong id="viewersItemsEnd">10</strong> of <strong id="viewersItemsTotal">0</strong> viewers
+                                </div>
+                                <div class="pagination-controls" id="viewersPaginationControls">
+                                    <!-- Pagination buttons will be rendered here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3>Confirm Deletion</h3>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete <strong id="deleteUserName"></strong>?</p>
+                <p style="color: #6b7280; font-size: 14px; margin-top: 12px;">This action cannot be undone.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeDeleteModal()">Cancel</button>
+                <button class="btn-danger" onclick="confirmDelete()">
+                    <i class="fas fa-trash"></i>
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add System Member Modal -->
+    <div id="addSystemMemberModal" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <i class="fas fa-user-plus" style="color: #6366f1;"></i>
+                <h3>Add System Member</h3>
+            </div>
+            <div class="modal-body" style="text-align: left;">
+                <form id="systemMemberForm">
+                    <div class="form-group">
+                        <label for="systemMemberName">Name <span class="required">*</span></label>
+                        <input type="text" id="systemMemberName" class="form-input" placeholder="Enter full name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="systemMemberEmail">Email <span class="required">*</span></label>
+                        <input type="email" id="systemMemberEmail" class="form-input" placeholder="Enter email address" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="systemMemberPassword">Password <span class="required">*</span></label>
+                        <input type="password" id="systemMemberPassword" class="form-input" placeholder="Enter password" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="systemMemberRole">Choose Role <span class="required">*</span></label>
+                        <select id="systemMemberRole" class="form-select" onchange="handleSystemRoleChange()" required>
+                            <option value="">Select a role</option>
+                            <option value="System Admin">System Admin</option>
+                            <option value="System Owner">System Owner</option>
+                            <option value="Restaurant Owner">Restaurant Owner</option>
+                            <option value="Recipient">Recipient</option>
+                            <option value="Viewer">Viewer</option>
+                        </select>
+                    </div>
+                    
+                    <div id="systemRestaurantSelect" class="form-group" style="display: none;">
+                        <label for="systemMemberRestaurant">Select Restaurant <span class="required">*</span></label>
+                        <select id="systemMemberRestaurant" class="form-select" onchange="handleSystemRestaurantChange()">
+                            <option value="">Select a restaurant</option>
+                        </select>
+                    </div>
+                    
+                    <div id="systemBranchSelect" class="form-group" style="display: none;">
+                        <label for="systemMemberBranch">Select Branch <span class="required">*</span></label>
+                        <select id="systemMemberBranch" class="form-select">
+                            <option value="">Select a branch</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer full">
+                <button class="btn-secondary" onclick="closeAddSystemMemberModal()">Cancel</button>
+                <button class="btn-primary" onclick="submitSystemMember()">
+                    <i class="fas fa-check"></i>
+                    Add Member
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Restaurant Member Modal -->
+    <div id="addRestaurantMemberModal" class="modal">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <i class="fas fa-user-plus" style="color: #6366f1;"></i>
+                <h3>Add Restaurant Member</h3>
+            </div>
+            <div class="modal-body" style="text-align: left;">
+                <form id="restaurantMemberForm">
+                    <div class="form-group">
+                        <label for="restaurantMemberName">Name <span class="required">*</span></label>
+                        <input type="text" id="restaurantMemberName" class="form-input" placeholder="Enter full name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="restaurantMemberEmail">Email <span class="required">*</span></label>
+                        <input type="email" id="restaurantMemberEmail" class="form-input" placeholder="Enter email address" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="restaurantMemberPassword">Password <span class="required">*</span></label>
+                        <input type="password" id="restaurantMemberPassword" class="form-input" placeholder="Enter password" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="restaurantMemberRole">Choose Role <span class="required">*</span></label>
+                        <select id="restaurantMemberRole" class="form-select" onchange="handleRestaurantRoleChange()" required>
+                            <option value="">Select a role</option>
+                            <option value="Recipient">Recipient</option>
+                            <option value="Viewer">Viewer</option>
+                        </select>
+                    </div>
+                    
+                    <div id="restaurantBranchSelect" class="form-group" style="display: none;">
+                        <label for="restaurantMemberBranch">Select Branch <span class="required">*</span></label>
+                        <select id="restaurantMemberBranch" class="form-select">
+                            <option value="">Select a branch</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer full">
+                <button class="btn-secondary" onclick="closeAddRestaurantMemberModal()">Cancel</button>
+                <button class="btn-primary" onclick="submitRestaurantMember()">
+                    <i class="fas fa-check"></i>
+                    Add Member
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample Data
+        const restaurants = [
+            { id: 1, name: 'Tarek Restaurant', status: 'opened', address: '123 Main St, Downtown', owners: 2, staff: 12, date: '2024-01-15' },
+            { id: 2, name: 'Sa3eed QA', status: 'opened', address: '456 North Ave, Uptown', owners: 1, staff: 8, date: '2024-02-20' },
+            { id: 3, name: 'Imad Resto', status: 'opened', address: '789 Mall Blvd, Shopping Center', owners: 3, staff: 15, date: '2024-03-10' },
+            { id: 4, name: 'Shrimp Nation', status: 'opened', address: '321 Beach Rd, Seaside', owners: 1, staff: 6, date: '2024-01-25' },
+            { id: 5, name: 'Wingman Jo', status: 'opened', address: '654 City Center Dr', owners: 2, staff: 10, date: '2024-02-05' },
+            { id: 6, name: '99Grill', status: 'opened', address: '987 North Side Ave', owners: 1, staff: 7, date: '2024-03-15' },
+            { id: 7, name: 'Pasta Palace', status: 'closed', address: '147 East End St', owners: 2, staff: 5, date: '2024-01-30' },
+            { id: 8, name: 'Burger Hub', status: 'opened', address: '258 West Side Blvd', owners: 1, staff: 9, date: '2024-02-18' },
+            { id: 9, name: 'Sushi World', status: 'closed', address: '369 Downtown Plaza', owners: 2, staff: 4, date: '2024-03-22' },
+            { id: 10, name: 'Vegan Delight', status: 'opened', address: '741 Uptown Circle', owners: 1, staff: 11, date: '2024-01-12' },
+            { id: 11, name: 'Pizza Planet', status: 'opened', address: '852 Mall Road', owners: 2, staff: 13, date: '2024-02-28' },
+            { id: 12, name: 'Curry Corner', status: 'opened', address: '963 City Center Way', owners: 1, staff: 14, date: '2024-03-05' },
+            { id: 13, name: 'Taco Town', status: 'closed', address: '159 Beach Ave', owners: 1, staff: 3, date: '2024-01-20' },
+            { id: 14, name: 'BBQ Barn', status: 'opened', address: '357 North Side Dr', owners: 2, staff: 8, date: '2024-02-14' },
+            { id: 15, name: 'Salad Stop', status: 'opened', address: '753 East End Rd', owners: 1, staff: 6, date: '2024-03-18' },
+            { id: 16, name: 'Dumpling Den', status: 'opened', address: '951 West Side St', owners: 2, staff: 7, date: '2024-01-28' },
+            { id: 17, name: 'Steakhouse 101', status: 'opened', address: '159 Downtown Ave', owners: 3, staff: 12, date: '2024-02-22' },
+            { id: 18, name: 'Seafood Shack', status: 'closed', address: '357 Uptown Blvd', owners: 1, staff: 5, date: '2024-03-08' }
+        ];
+
+        const systemRoles = [
+            { id: 1, name: 'Ahmed Hassan', email: 'ahmed@ordertech.com', role: 'System Owner', joinedDate: 'Jan 2024' },
+            { id: 2, name: 'Sara Mohamed', email: 'sara@ordertech.com', role: 'System Admin', joinedDate: 'Feb 2024' },
+            { id: 3, name: 'Omar Ali', email: 'omar@ordertech.com', role: 'System Admin', joinedDate: 'Mar 2024' },
+            { id: 4, name: 'Fatima Ibrahim', email: 'fatima@ordertech.com', role: 'System Owner', joinedDate: 'Jan 2024' },
+            { id: 5, name: 'Khaled Mahmoud', email: 'khaled@ordertech.com', role: 'System Admin', joinedDate: 'Feb 2024' },
+            { id: 6, name: 'Nour Youssef', email: 'nour@ordertech.com', role: 'System Owner', joinedDate: 'Mar 2024' },
+            { id: 7, name: 'Amira Kamal', email: 'amira@ordertech.com', role: 'System Admin', joinedDate: 'Jan 2024' },
+            { id: 8, name: 'Hassan Saleh', email: 'hassan@ordertech.com', role: 'System Admin', joinedDate: 'Feb 2024' },
+            { id: 9, name: 'Laila Fawzy', email: 'laila@ordertech.com', role: 'System Owner', joinedDate: 'Mar 2024' },
+            { id: 10, name: 'Youssef Ahmed', email: 'youssef@ordertech.com', role: 'System Admin', joinedDate: 'Jan 2024' },
+            { id: 11, name: 'Mona Adel', email: 'mona@ordertech.com', role: 'System Owner', joinedDate: 'Feb 2024' },
+            { id: 12, name: 'Tarek Nabil', email: 'tarek@ordertech.com', role: 'System Admin', joinedDate: 'Mar 2024' },
+            { id: 13, name: 'Dina Gamal', email: 'dina@ordertech.com', role: 'System Admin', joinedDate: 'Jan 2024' },
+            { id: 14, name: 'Mahmoud Samir', email: 'mahmoud@ordertech.com', role: 'System Owner', joinedDate: 'Feb 2024' },
+            { id: 15, name: 'Salma Hossam', email: 'salma@ordertech.com', role: 'System Admin', joinedDate: 'Mar 2024' }
+        ];
+
+        const restaurantMembers = [
+            { id: 1, name: 'John Smith', email: 'john@restaurant.com', role: 'Owner', joinedDate: 'Jan 2024' },
+            { id: 2, name: 'Emily Johnson', email: 'emily@restaurant.com', role: 'Owner', joinedDate: 'Feb 2024' },
+            { id: 3, name: 'Michael Brown', email: 'michael@restaurant.com', role: 'Recipient', branch: 'Downtown Branch', joinedDate: 'Mar 2024' },
+            { id: 4, name: 'David Lee', email: 'david@restaurant.com', role: 'Recipient', branch: 'Uptown Branch', joinedDate: 'Jan 2024' },
+            { id: 5, name: 'Lisa Wang', email: 'lisa@restaurant.com', role: 'Viewer', branch: 'Downtown Branch', joinedDate: 'Feb 2024' },
+            { id: 6, name: 'Tom Wilson', email: 'tom@restaurant.com', role: 'Recipient', branch: 'Mall Branch', joinedDate: 'Mar 2024' },
+            { id: 7, name: 'Anna Taylor', email: 'anna@restaurant.com', role: 'Viewer', branch: 'Uptown Branch', joinedDate: 'Jan 2024' },
+            { id: 8, name: 'Robert Chen', email: 'robert@restaurant.com', role: 'Owner', joinedDate: 'Feb 2024' },
+            { id: 9, name: 'Sarah Miller', email: 'sarah@restaurant.com', role: 'Recipient', branch: 'Downtown Branch', joinedDate: 'Mar 2024' },
+            { id: 10, name: 'James Wilson', email: 'james@restaurant.com', role: 'Viewer', branch: 'Mall Branch', joinedDate: 'Jan 2024' },
+            { id: 11, name: 'Maria Garcia', email: 'maria@restaurant.com', role: 'Recipient', branch: 'Uptown Branch', joinedDate: 'Feb 2024' },
+            { id: 12, name: 'Daniel Kim', email: 'daniel@restaurant.com', role: 'Viewer', branch: 'Downtown Branch', joinedDate: 'Mar 2024' }
+        ];
+
+        let currentView = 'grid';
+        let currentRestaurant = null;
+        let userToDelete = null;
+        let currentPage = 1;
+        let itemsPerPage = 10;
+        let filteredRestaurants = [...restaurants];
+        let rolesView = 'grid';
+        let rolesCurrentPage = 1;
+        let rolesItemsPerPage = 10;
+        let filteredSystemRoles = [...systemRoles];
+        
+        // Tab-based member management
+        let tabStates = {
+            owners: {
+                view: 'grid',
+                currentPage: 1,
+                itemsPerPage: 10,
+                filteredMembers: [],
+                searchTerm: ''
+            },
+            recipients: {
+                view: 'grid',
+                currentPage: 1,
+                itemsPerPage: 10,
+                filteredMembers: [],
+                searchTerm: '',
+                branchFilter: 'all'
+            },
+            viewers: {
+                view: 'grid',
+                currentPage: 1,
+                itemsPerPage: 10,
+                filteredMembers: [],
+                searchTerm: '',
+                branchFilter: 'all'
+            }
+        };
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            filteredRestaurants = [...restaurants];
+            filteredSystemRoles = [...systemRoles];
+            renderRestaurants();
+            renderSystemRoles();
+        });
+
+        // Toggle sidebar on mobile
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            
+            sidebar.classList.toggle('active');
+            sidebar.classList.toggle('collapsed');
+            mainContent.classList.toggle('expanded');
+        }
+
+        // Handle navigation clicks
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all items
+                document.querySelectorAll('.nav-item').forEach(nav => {
+                    nav.classList.remove('active');
+                });
+                
+                // Add active class to clicked item
+                this.classList.add('active');
+                
+                // Get page name
+                const pageName = this.getAttribute('data-page');
+                
+                // Show appropriate page
+                if (pageName === 'members') {
+                    showPage('restaurantsPage');
+                }
+            });
+        });
+
+        // Handle sign out
+        function handleSignOut(e) {
+            e.preventDefault();
+            if (confirm('Are you sure you want to sign out?')) {
+                console.log('Signing out...');
+                alert('Sign out functionality would be implemented here');
+            }
+        }
+
+        // Page Navigation
+        function showPage(pageId) {
+            document.querySelectorAll('.page-content').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        // Render Restaurants with Pagination
+        function renderRestaurants() {
+            const totalItems = filteredRestaurants.length;
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+            
+            // Make sure current page is valid
+            if (currentPage > totalPages && totalPages > 0) {
+                currentPage = totalPages;
+            }
+            if (currentPage < 1) {
+                currentPage = 1;
+            }
+            
+            // Calculate start and end indices
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
+            
+            // Get items for current page
+            const pageItems = filteredRestaurants.slice(startIndex, endIndex);
+            
+            // Render items
+            const grid = document.getElementById('restaurantsGrid');
+            if (pageItems.length === 0) {
+                grid.innerHTML = '<div style="text-align: center; padding: 60px 20px; color: #6b7280; grid-column: 1/-1;"><i class="fas fa-store" style="font-size: 48px; margin-bottom: 16px; opacity: 0.3; display: block;"></i><p style="font-size: 16px;">No restaurants found</p></div>';
+            } else {
+                grid.innerHTML = pageItems.map(restaurant => `
+                    <div class="restaurant-card" onclick="openRestaurantMembers(${restaurant.id}, '${restaurant.name}')">
+                        <div class="restaurant-card-header">
+                            <div class="restaurant-card-title">
+                                <h3>${restaurant.name}</h3>
+                                <div class="restaurant-address">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>${restaurant.address}</span>
+                                </div>
+                            </div>
+                            <span class="status-badge ${restaurant.status}">
+                                ${restaurant.status === 'opened' ? 'Opened' : 'Closed'}
+                            </span>
+                        </div>
+                        <div class="restaurant-stats">
+                            <div class="stat-item">
+                                <div class="stat-icon">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-value">${restaurant.owners}</div>
+                                    <div class="stat-label">Owners</div>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-value">${restaurant.staff}</div>
+                                    <div class="stat-label">Staff</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            // Update pagination info
+            updatePaginationInfo(startIndex + 1, endIndex, totalItems);
+            
+            // Render pagination controls
+            renderPagination(totalPages);
+        }
+
+        // Update Pagination Info
+        function updatePaginationInfo(start, end, total) {
+            document.getElementById('itemsStart').textContent = total > 0 ? start : 0;
+            document.getElementById('itemsEnd').textContent = end;
+            document.getElementById('itemsTotal').textContent = total;
+        }
+
+        // Render Pagination Controls
+        function renderPagination(totalPages) {
+            const controls = document.getElementById('paginationControls');
+            
+            if (totalPages <= 1) {
+                controls.innerHTML = '';
+                return;
+            }
+            
+            let html = '';
+            
+            // Previous button
+            html += `<button class="pagination-btn" onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>
+                        <i class="fas fa-chevron-left"></i>
+                     </button>`;
+            
+            // Page numbers
+            const maxVisiblePages = 5;
+            let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+            
+            if (endPage - startPage < maxVisiblePages - 1) {
+                startPage = Math.max(1, endPage - maxVisiblePages + 1);
+            }
+            
+            // First page
+            if (startPage > 1) {
+                html += `<button class="pagination-btn" onclick="goToPage(1)">1</button>`;
+                if (startPage > 2) {
+                    html += '<span class="pagination-ellipsis">...</span>';
+                }
+            }
+            
+            // Page numbers
+            for (let i = startPage; i <= endPage; i++) {
+                html += `<button class="pagination-btn ${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+            }
+            
+            // Last page
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) {
+                    html += '<span class="pagination-ellipsis">...</span>';
+                }
+                html += `<button class="pagination-btn" onclick="goToPage(${totalPages})">${totalPages}</button>`;
+            }
+            
+            // Next button
+            html += `<button class="pagination-btn" onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>
+                        <i class="fas fa-chevron-right"></i>
+                     </button>`;
+            
+            controls.innerHTML = html;
+        }
+
+        // Go to specific page
+        function goToPage(page) {
+            const totalPages = Math.ceil(filteredRestaurants.length / itemsPerPage);
+            if (page < 1 || page > totalPages) return;
+            
+            currentPage = page;
+            renderRestaurants();
+            
+            // Scroll to top of grid
+            document.getElementById('restaurantsGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Filter Restaurants
+        function filterRestaurants() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filterValue = document.getElementById('filterSelect').value;
+            
+            filteredRestaurants = restaurants.filter(restaurant => {
+                const matchesSearch = restaurant.name.toLowerCase().includes(searchTerm) || 
+                                    restaurant.address.toLowerCase().includes(searchTerm);
+                const matchesFilter = filterValue === 'all' || restaurant.status === filterValue;
+                
+                return matchesSearch && matchesFilter;
+            });
+            
+            currentPage = 1; // Reset to first page when filtering
+            renderRestaurants();
+        }
+
+        // Sort Restaurants
+        function sortRestaurants() {
+            const sortValue = document.getElementById('sortSelect').value;
+            
+            switch(sortValue) {
+                case 'name':
+                    filteredRestaurants.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+                case 'date':
+                    filteredRestaurants.sort((a, b) => new Date(b.date) - new Date(a.date));
+                    break;
+                case 'members':
+                    filteredRestaurants.sort((a, b) => b.members - a.members);
+                    break;
+            }
+            
+            currentPage = 1; // Reset to first page when sorting
+            renderRestaurants();
+        }
+
+        // Change View
+        function changeView(view) {
+            currentView = view;
+            const grid = document.getElementById('restaurantsGrid');
+            const buttons = document.querySelectorAll('.view-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`[data-view="${view}"]`).classList.add('active');
+            
+            if (view === 'list') {
+                grid.classList.add('list-view');
+            } else {
+                grid.classList.remove('list-view');
+            }
+        }
+
+        // System Roles Page
+        function openSystemRolesPage() {
+            filteredSystemRoles = [...systemRoles];
+            rolesCurrentPage = 1;
+            document.getElementById('rolesSearchInput').value = '';
+            document.getElementById('rolesFilterSelect').value = 'all';
+            document.getElementById('rolesSortSelect').value = 'name';
+            renderSystemRoles();
+            showPage('systemRolesPage');
+        }
+
+        function closeSystemRolesPage() {
+            showPage('restaurantsPage');
+        }
+
+        function renderSystemRoles() {
+            const totalItems = filteredSystemRoles.length;
+            const totalPages = Math.ceil(totalItems / rolesItemsPerPage);
+            
+            // Make sure current page is valid
+            if (rolesCurrentPage > totalPages && totalPages > 0) {
+                rolesCurrentPage = totalPages;
+            }
+            if (rolesCurrentPage < 1) {
+                rolesCurrentPage = 1;
+            }
+            
+            // Calculate start and end indices
+            const startIndex = (rolesCurrentPage - 1) * rolesItemsPerPage;
+            const endIndex = Math.min(startIndex + rolesItemsPerPage, totalItems);
+            
+            // Get items for current page
+            const pageItems = filteredSystemRoles.slice(startIndex, endIndex);
+            
+            // Render items
+            const grid = document.getElementById('systemRolesGrid');
+            if (pageItems.length === 0) {
+                grid.innerHTML = '<div style="text-align: center; padding: 60px 20px; color: #6b7280; grid-column: 1/-1;"><i class="fas fa-user-shield" style="font-size: 48px; margin-bottom: 16px; opacity: 0.3; display: block;"></i><p style="font-size: 16px;">No users found</p></div>';
+            } else {
+                grid.innerHTML = pageItems.map(user => {
+                    const roleClass = user.role === 'System Admin' ? 'admin' : 'owner';
+                    return `
+                        <div class="role-card ${roleClass}">
+                            <div class="role-card-header">
+                                <div class="role-user-info">
+                                    <div class="role-avatar">${user.name.split(' ').map(n => n[0]).join('')}</div>
+                                    <div class="role-details">
+                                        <h4>${user.name}</h4>
+                                        <span class="role-badge ${roleClass}">
+                                            ${user.role}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="role-actions">
+                                    <button class="icon-btn edit" onclick="editUser(${user.id}); event.stopPropagation();" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="icon-btn delete" onclick="openDeleteModal(${user.id}, '${user.name}'); event.stopPropagation();" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="role-card-body">
+                                <p><i class="fas fa-envelope"></i> ${user.email}</p>
+                                <p><i class="fas fa-calendar"></i> Joined ${user.joinedDate}</p>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+            
+            // Update pagination info
+            updateRolesPaginationInfo(startIndex + 1, endIndex, totalItems);
+            
+            // Render pagination controls
+            renderRolesPagination(totalPages);
+        }
+
+        // Update Roles Pagination Info
+        function updateRolesPaginationInfo(start, end, total) {
+            document.getElementById('rolesItemsStart').textContent = total > 0 ? start : 0;
+            document.getElementById('rolesItemsEnd').textContent = end;
+            document.getElementById('rolesItemsTotal').textContent = total;
+        }
+
+        // Render Roles Pagination Controls
+        function renderRolesPagination(totalPages) {
+            const controls = document.getElementById('rolesPaginationControls');
+            
+            if (totalPages <= 1) {
+                controls.innerHTML = '';
+                return;
+            }
+            
+            let html = '';
+            
+            // Previous button
+            html += `<button class="pagination-btn" onclick="goToRolesPage(${rolesCurrentPage - 1})" ${rolesCurrentPage === 1 ? 'disabled' : ''}>
+                        <i class="fas fa-chevron-left"></i>
+                     </button>`;
+            
+            // Page numbers
+            const maxVisiblePages = 5;
+            let startPage = Math.max(1, rolesCurrentPage - Math.floor(maxVisiblePages / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+            
+            if (endPage - startPage < maxVisiblePages - 1) {
+                startPage = Math.max(1, endPage - maxVisiblePages + 1);
+            }
+            
+            // First page
+            if (startPage > 1) {
+                html += `<button class="pagination-btn" onclick="goToRolesPage(1)">1</button>`;
+                if (startPage > 2) {
+                    html += '<span class="pagination-ellipsis">...</span>';
+                }
+            }
+            
+            // Page numbers
+            for (let i = startPage; i <= endPage; i++) {
+                html += `<button class="pagination-btn ${i === rolesCurrentPage ? 'active' : ''}" onclick="goToRolesPage(${i})">${i}</button>`;
+            }
+            
+            // Last page
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) {
+                    html += '<span class="pagination-ellipsis">...</span>';
+                }
+                html += `<button class="pagination-btn" onclick="goToRolesPage(${totalPages})">${totalPages}</button>`;
+            }
+            
+            // Next button
+            html += `<button class="pagination-btn" onclick="goToRolesPage(${rolesCurrentPage + 1})" ${rolesCurrentPage === totalPages ? 'disabled' : ''}>
+                        <i class="fas fa-chevron-right"></i>
+                     </button>`;
+            
+            controls.innerHTML = html;
+        }
+
+        // Go to specific roles page
+        function goToRolesPage(page) {
+            const totalPages = Math.ceil(filteredSystemRoles.length / rolesItemsPerPage);
+            if (page < 1 || page > totalPages) return;
+            
+            rolesCurrentPage = page;
+            renderSystemRoles();
+            
+            // Scroll to top of grid
+            document.getElementById('systemRolesGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Filter System Roles
+        function filterSystemRoles() {
+            const searchTerm = document.getElementById('rolesSearchInput').value.toLowerCase();
+            const filterValue = document.getElementById('rolesFilterSelect').value;
+            
+            filteredSystemRoles = systemRoles.filter(user => {
+                const matchesSearch = user.name.toLowerCase().includes(searchTerm) || 
+                                    user.email.toLowerCase().includes(searchTerm);
+                const matchesFilter = filterValue === 'all' || user.role === filterValue;
+                
+                return matchesSearch && matchesFilter;
+            });
+            
+            rolesCurrentPage = 1; // Reset to first page when filtering
+            renderSystemRoles();
+        }
+
+        // Sort System Roles
+        function sortSystemRoles() {
+            const sortValue = document.getElementById('rolesSortSelect').value;
+            
+            switch(sortValue) {
+                case 'name':
+                    filteredSystemRoles.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+                case 'role':
+                    filteredSystemRoles.sort((a, b) => a.role.localeCompare(b.role));
+                    break;
+                case 'date':
+                    filteredSystemRoles.sort((a, b) => {
+                        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                        const [aMonth, aYear] = a.joinedDate.split(' ');
+                        const [bMonth, bYear] = b.joinedDate.split(' ');
+                        const aDate = new Date(aYear, months.indexOf(aMonth));
+                        const bDate = new Date(bYear, months.indexOf(bMonth));
+                        return bDate - aDate;
+                    });
+                    break;
+            }
+            
+            rolesCurrentPage = 1; // Reset to first page when sorting
+            renderSystemRoles();
+        }
+
+        // Change Roles View
+        function changeRolesView(view) {
+            rolesView = view;
+            const grid = document.getElementById('systemRolesGrid');
+            const buttons = document.querySelectorAll('#systemRolesPage .view-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('#systemRolesPage .view-btn').forEach(btn => {
+                if (btn.getAttribute('data-view') === view) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            if (view === 'list') {
+                grid.classList.add('list-view');
+            } else {
+                grid.classList.remove('list-view');
+            }
+        }
+
+        // Restaurant Members Page
+        function openRestaurantMembers(restaurantId, restaurantName) {
+            currentRestaurant = restaurantId;
+            document.getElementById('restaurantMembersTitle').textContent = `${restaurantName} - Members`;
+            document.getElementById('restaurantMembersSubtitle').textContent = `Manage staff for ${restaurantName}`;
+            
+            // Initialize tab states
+            tabStates.owners.filteredMembers = restaurantMembers.filter(m => m.role === 'Owner');
+            tabStates.recipients.filteredMembers = restaurantMembers.filter(m => m.role === 'Recipient');
+            tabStates.viewers.filteredMembers = restaurantMembers.filter(m => m.role === 'Viewer');
+            
+            // Reset all tabs
+            Object.keys(tabStates).forEach(tab => {
+                tabStates[tab].currentPage = 1;
+                tabStates[tab].searchTerm = '';
+                const searchInput = document.getElementById(`${tab}SearchInput`);
+                const sortSelect = document.getElementById(`${tab}SortSelect`);
+                if (searchInput) searchInput.value = '';
+                if (sortSelect) sortSelect.value = 'name';
+            });
+            
+            // Render all tabs
+            renderTabMembers('owners');
+            renderTabMembers('recipients');
+            renderTabMembers('viewers');
+            
+            showPage('restaurantMembersPage');
+        }
+
+        function closeRestaurantMembersPage() {
+            showPage('restaurantsPage');
+        }
+
+        // Switch between tabs
+        function switchMembersTab(tabName) {
+            // Remove active class from all tabs
+            document.querySelectorAll('#restaurantMembersPage .tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelectorAll('#restaurantMembersPage .tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Add active class to selected tab
+            document.querySelector(`#restaurantMembersPage [data-tab="${tabName}"]`).classList.add('active');
+            document.getElementById(`${tabName}Tab`).classList.add('active');
+        }
+
+        // Render members for a specific tab
+        function renderTabMembers(tabName) {
+            const state = tabStates[tabName];
+            const totalItems = state.filteredMembers.length;
+            const totalPages = Math.ceil(totalItems / state.itemsPerPage);
+            
+            // Make sure current page is valid
+            if (state.currentPage > totalPages && totalPages > 0) {
+                state.currentPage = totalPages;
+            }
+            if (state.currentPage < 1) {
+                state.currentPage = 1;
+            }
+            
+            // Calculate start and end indices
+            const startIndex = (state.currentPage - 1) * state.itemsPerPage;
+            const endIndex = Math.min(startIndex + state.itemsPerPage, totalItems);
+            
+            // Get items for current page
+            const pageItems = state.filteredMembers.slice(startIndex, endIndex);
+            
+            // Render items
+            const grid = document.getElementById(`${tabName}Grid`);
+            const roleClass = tabName.slice(0, -1); // Remove 's' from end (owners -> owner)
+            
+            if (pageItems.length === 0) {
+                grid.innerHTML = `<div style="text-align: center; padding: 60px 20px; color: #6b7280; grid-column: 1/-1;"><i class="fas fa-users" style="font-size: 48px; margin-bottom: 16px; opacity: 0.3; display: block;"></i><p style="font-size: 16px;">No ${tabName} found</p></div>`;
+            } else {
+                grid.innerHTML = pageItems.map(member => {
+                    const memberRoleClass = member.role.toLowerCase();
+                    return `
+                        <div class="member-card ${memberRoleClass}">
+                            <div class="member-card-header">
+                                <div class="member-info">
+                                    <div class="member-avatar">${member.name.split(' ').map(n => n[0]).join('')}</div>
+                                    <div class="member-details">
+                                        <h4>${member.name}</h4>
+                                        <span class="member-role-badge ${memberRoleClass}">
+                                            ${member.role}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="member-actions">
+                                    <button class="icon-btn edit" onclick="editMember(${member.id}); event.stopPropagation();" title="Edit">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="icon-btn delete" onclick="openDeleteMemberModal(${member.id}, '${member.name}'); event.stopPropagation();" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="member-card-body">
+                                <p><i class="fas fa-envelope"></i> ${member.email}</p>
+                                ${member.branch ? `<p><i class="fas fa-store"></i> ${member.branch}</p>` : ''}
+                                <p><i class="fas fa-calendar"></i> Joined ${member.joinedDate}</p>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+            
+            // Update pagination info
+            updateTabPaginationInfo(tabName, startIndex + 1, endIndex, totalItems);
+            
+            // Render pagination controls
+            renderTabPagination(tabName, totalPages);
+        }
+
+        // Update tab pagination info
+        function updateTabPaginationInfo(tabName, start, end, total) {
+            document.getElementById(`${tabName}ItemsStart`).textContent = total > 0 ? start : 0;
+            document.getElementById(`${tabName}ItemsEnd`).textContent = end;
+            document.getElementById(`${tabName}ItemsTotal`).textContent = total;
+        }
+
+        // Render tab pagination controls
+        function renderTabPagination(tabName, totalPages) {
+            const controls = document.getElementById(`${tabName}PaginationControls`);
+            const state = tabStates[tabName];
+            
+            if (totalPages <= 1) {
+                controls.innerHTML = '';
+                return;
+            }
+            
+            let html = '';
+            
+            // Previous button
+            html += `<button class="pagination-btn" onclick="goToTabPage('${tabName}', ${state.currentPage - 1})" ${state.currentPage === 1 ? 'disabled' : ''}>
+                        <i class="fas fa-chevron-left"></i>
+                     </button>`;
+            
+            // Page numbers
+            const maxVisiblePages = 5;
+            let startPage = Math.max(1, state.currentPage - Math.floor(maxVisiblePages / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+            
+            if (endPage - startPage < maxVisiblePages - 1) {
+                startPage = Math.max(1, endPage - maxVisiblePages + 1);
+            }
+            
+            // First page
+            if (startPage > 1) {
+                html += `<button class="pagination-btn" onclick="goToTabPage('${tabName}', 1)">1</button>`;
+                if (startPage > 2) {
+                    html += '<span class="pagination-ellipsis">...</span>';
+                }
+            }
+            
+            // Page numbers
+            for (let i = startPage; i <= endPage; i++) {
+                html += `<button class="pagination-btn ${i === state.currentPage ? 'active' : ''}" onclick="goToTabPage('${tabName}', ${i})">${i}</button>`;
+            }
+            
+            // Last page
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) {
+                    html += '<span class="pagination-ellipsis">...</span>';
+                }
+                html += `<button class="pagination-btn" onclick="goToTabPage('${tabName}', ${totalPages})">${totalPages}</button>`;
+            }
+            
+            // Next button
+            html += `<button class="pagination-btn" onclick="goToTabPage('${tabName}', ${state.currentPage + 1})" ${state.currentPage === totalPages ? 'disabled' : ''}>
+                        <i class="fas fa-chevron-right"></i>
+                     </button>`;
+            
+            controls.innerHTML = html;
+        }
+
+        // Go to specific page in tab
+        function goToTabPage(tabName, page) {
+            const state = tabStates[tabName];
+            const totalPages = Math.ceil(state.filteredMembers.length / state.itemsPerPage);
+            if (page < 1 || page > totalPages) return;
+            
+            state.currentPage = page;
+            renderTabMembers(tabName);
+            
+            // Scroll to top of grid
+            document.getElementById(`${tabName}Grid`).scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // Filter members in tab
+        function filterTabMembers(tabName) {
+            const state = tabStates[tabName];
+            const searchTerm = document.getElementById(`${tabName}SearchInput`).value.toLowerCase();
+            state.searchTerm = searchTerm;
+            
+            // Get branch filter if exists
+            const branchFilterElement = document.getElementById(`${tabName}BranchFilter`);
+            if (branchFilterElement) {
+                state.branchFilter = branchFilterElement.value;
+            }
+            
+            // Get base members for this tab (by role)
+            const roleMap = {
+                owners: 'Owner',
+                recipients: 'Recipient',
+                viewers: 'Viewer'
+            };
+            
+            const baseMembers = restaurantMembers.filter(m => m.role === roleMap[tabName]);
+            
+            state.filteredMembers = baseMembers.filter(member => {
+                // Search filter
+                const matchesSearch = member.name.toLowerCase().includes(searchTerm) || 
+                                     member.email.toLowerCase().includes(searchTerm);
+                
+                // Branch filter (only for recipients and viewers)
+                const matchesBranch = !state.branchFilter || 
+                                     state.branchFilter === 'all' || 
+                                     member.branch === state.branchFilter;
+                
+                return matchesSearch && matchesBranch;
+            });
+            
+            state.currentPage = 1; // Reset to first page when filtering
+            renderTabMembers(tabName);
+        }
+
+        // Sort members in tab
+        function sortTabMembers(tabName) {
+            const state = tabStates[tabName];
+            const sortValue = document.getElementById(`${tabName}SortSelect`).value;
+            
+            switch(sortValue) {
+                case 'name':
+                    state.filteredMembers.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+                case 'date':
+                    state.filteredMembers.sort((a, b) => {
+                        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                        const [aMonth, aYear] = a.joinedDate.split(' ');
+                        const [bMonth, bYear] = b.joinedDate.split(' ');
+                        const aDate = new Date(aYear, months.indexOf(aMonth));
+                        const bDate = new Date(bYear, months.indexOf(bMonth));
+                        return bDate - aDate;
+                    });
+                    break;
+            }
+            
+            state.currentPage = 1; // Reset to first page when sorting
+            renderTabMembers(tabName);
+        }
+
+        // Change view in tab
+        function changeTabView(tabName, view) {
+            const state = tabStates[tabName];
+            state.view = view;
+            
+            const grid = document.getElementById(`${tabName}Grid`);
+            const tabElement = document.getElementById(`${tabName}Tab`);
+            const buttons = tabElement.querySelectorAll('.view-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            tabElement.querySelectorAll('.view-btn').forEach(btn => {
+                if (btn.getAttribute('data-view') === view) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            if (view === 'list') {
+                grid.classList.add('list-view');
+            } else {
+                grid.classList.remove('list-view');
+            }
+        }
+
+        // Edit Member
+        function editMember(memberId) {
+            const member = restaurantMembers.find(m => m.id === memberId);
+            alert(`Edit functionality for ${member.name} would be implemented here`);
+            console.log('Editing member:', member);
+        }
+
+        // Delete Member Modal
+        function openDeleteMemberModal(memberId, memberName) {
+            userToDelete = memberId;
+            document.getElementById('deleteUserName').textContent = memberName;
+            document.getElementById('deleteModal').classList.add('active');
+        }
+
+        // Edit User
+        function editUser(userId) {
+            const user = systemRoles.find(u => u.id === userId);
+            alert(`Edit functionality for ${user.name} would be implemented here`);
+            console.log('Editing user:', user);
+        }
+
+        // Delete Modal
+        function openDeleteModal(userId, userName) {
+            userToDelete = userId;
+            document.getElementById('deleteUserName').textContent = userName;
+            document.getElementById('deleteModal').classList.add('active');
+        }
+
+        function closeDeleteModal() {
+            userToDelete = null;
+            document.getElementById('deleteModal').classList.remove('active');
+        }
+
+        function confirmDelete() {
+            if (userToDelete) {
+                // Check if deleting from system roles
+                const userIndex = systemRoles.findIndex(u => u.id === userToDelete);
+                if (userIndex > -1) {
+                    systemRoles.splice(userIndex, 1);
+                    filteredSystemRoles = systemRoles.filter(user => {
+                        const searchTerm = document.getElementById('rolesSearchInput')?.value.toLowerCase() || '';
+                        const filterValue = document.getElementById('rolesFilterSelect')?.value || 'all';
+                        const matchesSearch = user.name.toLowerCase().includes(searchTerm) || 
+                                            user.email.toLowerCase().includes(searchTerm);
+                        const matchesFilter = filterValue === 'all' || user.role === filterValue;
+                        return matchesSearch && matchesFilter;
+                    });
+                    renderSystemRoles();
+                    closeDeleteModal();
+                    alert('User deleted successfully!');
+                    return;
+                }
+                
+                // Check if deleting from restaurant members
+                const memberIndex = restaurantMembers.findIndex(m => m.id === userToDelete);
+                if (memberIndex > -1) {
+                    const deletedMember = restaurantMembers[memberIndex];
+                    restaurantMembers.splice(memberIndex, 1);
+                    
+                    // Update all tab states
+                    tabStates.owners.filteredMembers = restaurantMembers.filter(m => m.role === 'Owner');
+                    tabStates.recipients.filteredMembers = restaurantMembers.filter(m => m.role === 'Recipient');
+                    tabStates.viewers.filteredMembers = restaurantMembers.filter(m => m.role === 'Viewer');
+                    
+                    // Apply current filters
+                    Object.keys(tabStates).forEach(tab => {
+                        const searchTerm = tabStates[tab].searchTerm;
+                        if (searchTerm) {
+                            tabStates[tab].filteredMembers = tabStates[tab].filteredMembers.filter(member => {
+                                return member.name.toLowerCase().includes(searchTerm) || 
+                                       member.email.toLowerCase().includes(searchTerm);
+                            });
+                        }
+                    });
+                    
+                    // Re-render all tabs
+                    renderTabMembers('owners');
+                    renderTabMembers('recipients');
+                    renderTabMembers('viewers');
+                    
+                    closeDeleteModal();
+                    alert('Member deleted successfully!');
+                }
+            }
+        }
+
+        // ============ ADD SYSTEM MEMBER MODAL ============
+        function openAddSystemMemberModal() {
+            // Populate restaurant dropdown
+            const restaurantSelect = document.getElementById('systemMemberRestaurant');
+            restaurantSelect.innerHTML = '<option value="">Select a restaurant</option>' + 
+                restaurants.map(r => `<option value="${r.id}">${r.name}</option>`).join('');
+            
+            document.getElementById('addSystemMemberModal').classList.add('active');
+        }
+
+        function closeAddSystemMemberModal() {
+            document.getElementById('addSystemMemberModal').classList.remove('active');
+            document.getElementById('systemMemberForm').reset();
+            document.getElementById('systemRestaurantSelect').style.display = 'none';
+            document.getElementById('systemBranchSelect').style.display = 'none';
+        }
+
+        function handleSystemRoleChange() {
+            const role = document.getElementById('systemMemberRole').value;
+            const restaurantSelect = document.getElementById('systemRestaurantSelect');
+            const branchSelect = document.getElementById('systemBranchSelect');
+            
+            // Hide both initially
+            restaurantSelect.style.display = 'none';
+            branchSelect.style.display = 'none';
+            
+            // Show restaurant dropdown for Restaurant Owner, Recipient, and Viewer
+            if (role === 'Restaurant Owner' || role === 'Recipient' || role === 'Viewer') {
+                restaurantSelect.style.display = 'block';
+            }
+        }
+
+        function handleSystemRestaurantChange() {
+            const role = document.getElementById('systemMemberRole').value;
+            const restaurantId = document.getElementById('systemMemberRestaurant').value;
+            const branchSelect = document.getElementById('systemBranchSelect');
+            const branchSelectElement = document.getElementById('systemMemberBranch');
+            
+            // Show branch dropdown only for Recipient and Viewer
+            if ((role === 'Recipient' || role === 'Viewer') && restaurantId) {
+                // Mock branches data - in real app, fetch from server based on restaurant
+                const branches = [
+                    'Downtown Branch',
+                    'Uptown Branch',
+                    'Mall Branch'
+                ];
+                
+                branchSelectElement.innerHTML = '<option value="">Select a branch</option>' + 
+                    branches.map(b => `<option value="${b}">${b}</option>`).join('');
+                
+                branchSelect.style.display = 'block';
+            } else {
+                branchSelect.style.display = 'none';
+            }
+        }
+
+        function submitSystemMember() {
+            const form = document.getElementById('systemMemberForm');
+            
+            // Basic validation
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+            
+            const name = document.getElementById('systemMemberName').value;
+            const email = document.getElementById('systemMemberEmail').value;
+            const password = document.getElementById('systemMemberPassword').value;
+            const role = document.getElementById('systemMemberRole').value;
+            const restaurantId = document.getElementById('systemMemberRestaurant').value;
+            const branch = document.getElementById('systemMemberBranch').value;
+            
+            // Additional validation
+            if (role === 'Restaurant Owner' && !restaurantId) {
+                alert('Please select a restaurant');
+                return;
+            }
+            
+            if ((role === 'Recipient' || role === 'Viewer') && !restaurantId) {
+                alert('Please select a restaurant');
+                return;
+            }
+            
+            if ((role === 'Recipient' || role === 'Viewer') && !branch) {
+                alert('Please select a branch');
+                return;
+            }
+            
+            // Create new member
+            const newMember = {
+                id: systemRoles.length + 1,
+                name: name,
+                email: email,
+                role: role,
+                joinedDate: new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+            };
+            
+            if (restaurantId) {
+                newMember.restaurantId = restaurantId;
+            }
+            
+            if (branch) {
+                newMember.branch = branch;
+            }
+            
+            // Add to array
+            systemRoles.push(newMember);
+            
+            // Refresh the display
+            filterSystemRoles();
+            
+            // Close modal
+            closeAddSystemMemberModal();
+            
+            // Show success message
+            alert(`Successfully added ${name} as ${role}`);
+        }
+
+        // ============ ADD RESTAURANT MEMBER MODAL ============
+        function openAddRestaurantMemberModal() {
+            // Populate branch dropdown with current restaurant's branches
+            const branchSelectElement = document.getElementById('restaurantMemberBranch');
+            const branches = [
+                'Downtown Branch',
+                'Uptown Branch',
+                'Mall Branch'
+            ];
+            
+            branchSelectElement.innerHTML = '<option value="">Select a branch</option>' + 
+                branches.map(b => `<option value="${b}">${b}</option>`).join('');
+            
+            document.getElementById('addRestaurantMemberModal').classList.add('active');
+        }
+
+        function closeAddRestaurantMemberModal() {
+            document.getElementById('addRestaurantMemberModal').classList.remove('active');
+            document.getElementById('restaurantMemberForm').reset();
+            document.getElementById('restaurantBranchSelect').style.display = 'none';
+        }
+
+        function handleRestaurantRoleChange() {
+            const role = document.getElementById('restaurantMemberRole').value;
+            const branchSelect = document.getElementById('restaurantBranchSelect');
+            
+            // Show branch dropdown when role is selected
+            if (role === 'Recipient' || role === 'Viewer') {
+                branchSelect.style.display = 'block';
+            } else {
+                branchSelect.style.display = 'none';
+            }
+        }
+
+        function submitRestaurantMember() {
+            const form = document.getElementById('restaurantMemberForm');
+            
+            // Basic validation
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+            
+            const name = document.getElementById('restaurantMemberName').value;
+            const email = document.getElementById('restaurantMemberEmail').value;
+            const password = document.getElementById('restaurantMemberPassword').value;
+            const role = document.getElementById('restaurantMemberRole').value;
+            const branch = document.getElementById('restaurantMemberBranch').value;
+            
+            // Additional validation
+            if (!branch) {
+                alert('Please select a branch');
+                return;
+            }
+            
+            // Create new member
+            const newMember = {
+                id: restaurantMembers.length + 1,
+                name: name,
+                email: email,
+                role: role,
+                branch: branch,
+                joinedDate: new Date().toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
+            };
+            
+            // Add to array
+            restaurantMembers.push(newMember);
+            
+            // Update the appropriate tab
+            const tabName = role === 'Recipient' ? 'recipients' : 'viewers';
+            
+            // Re-initialize the tab with new data
+            const roleMap = {
+                owners: 'Owner',
+                recipients: 'Recipient',
+                viewers: 'Viewer'
+            };
+            
+            const state = tabStates[tabName];
+            const baseMembers = restaurantMembers.filter(m => m.role === roleMap[tabName]);
+            state.filteredMembers = baseMembers;
+            state.currentPage = 1;
+            
+            // Render the updated tab
+            renderTabMembers(tabName);
+            
+            // Close modal
+            closeAddRestaurantMemberModal();
+            
+            // Show success message
+            alert(`Successfully added ${name} as ${role}`);
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(e) {
+            const deleteModal = document.getElementById('deleteModal');
+            const systemModal = document.getElementById('addSystemMemberModal');
+            const restaurantModal = document.getElementById('addRestaurantMemberModal');
+            
+            if (e.target === deleteModal) {
+                closeDeleteModal();
+            }
+            if (e.target === systemModal) {
+                closeAddSystemMemberModal();
+            }
+            if (e.target === restaurantModal) {
+                closeAddRestaurantMemberModal();
+            }
+            
+            // Close sidebar on mobile when clicking outside
+            const sidebar = document.getElementById('sidebar');
+            const mobileToggle = document.querySelector('.mobile-toggle');
+            
+            if (window.innerWidth <= 768) {
+                if (!sidebar.contains(e.target) && !mobileToggle.contains(e.target)) {
+                    sidebar.classList.remove('active');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
